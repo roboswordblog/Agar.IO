@@ -156,7 +156,18 @@ class Food:
       if self.rect.colliderect(player.rect):
           foodlist.remove(self)
           player.actualSize += 1
-      self.size = max(5, int(20 - player.actualSize * 0.1))
+          for i in enemyList:
+            if i.size < 10:
+              i.size = 10
+            else:
+              i.size -= 1
+          for i in foodList:
+            
+            if i.size < 10:
+              i.size = 10
+            else:
+              i.size -= 1
+      # self.size = max(5, int(20 - player.actualSize * 0.1))
 
 
 
@@ -187,7 +198,7 @@ class Enemies:
       pygame.draw.circle(
               window,
               self.color,
-              (int(self.x) - player.actualX, int(self.y)- player.actualY), NegativeCheck(self.size - player.actualSize)
+              (int(self.x) - player.actualX, int(self.y), self.size
           )
 
 
