@@ -1,4 +1,3 @@
-# This is what you give to people who want to play the game.
 import sys, random
 import pygame, socket, json
 # from numpy.ma.core import append
@@ -156,18 +155,21 @@ class Food:
       if self.rect.colliderect(player.rect):
           foodlist.remove(self)
           player.actualSize += 1
-          for i in enemyList:
-            if i.size < 10:
-              i.size = 10
-            else:
-              i.size -= 1
-          for i in foodList:
-            
-            if i.size < 10:
-              i.size = 10
-            else:
-              i.size -= 1
-      # self.size = max(5, int(20 - player.actualSize * 0.1))
+
+
+          for _,i in enemylist.items():
+              if i.size < 10:
+                  i.size = 10
+              else:
+                  i.size -= 1
+          for i in foodlist:
+
+
+              if i.size < 10:
+                  i.size = 10
+              else:
+                  i.size -= 1
+     # self.size = max(5, int(20 - player.actualSize * 0.1))
 
 
 
@@ -198,7 +200,7 @@ class Enemies:
       pygame.draw.circle(
               window,
               self.color,
-              (int(self.x) - player.actualX, int(self.y), self.size
+          (int(self.x)-player.actualX, int(self.y)-player.actualY), self.size
           )
 
 
@@ -233,17 +235,29 @@ while True:
       value.draw(player)
       value.update(player)
 
+
+
+
   for pid, p in server_players.items():
       if str(pid) == str(player.player):
           continue
 
+
+
+
       if not all(k in p for k in ("x", "y", "size")):
           continue
+
+
+
 
       x = int(p["x"])
       y = int(p["y"])
       size = int(p["size"])
       color = tuple(p["color"])
+
+
+
 
       if pid not in enemylist:
           enemylist[pid] = Enemies(x, y, pid, size, color)
@@ -251,6 +265,17 @@ while True:
           enemylist[pid].x = x
           enemylist[pid].y = y
           enemylist[pid].size = size
+
+
+
+
+
+
+
+
+
+
+
 
   for event in pygame.event.get():
       if event.type == pygame.QUIT:
@@ -260,5 +285,8 @@ while True:
 
   clock.tick(120)
   pygame.display.update()
+
+
+
 
 
